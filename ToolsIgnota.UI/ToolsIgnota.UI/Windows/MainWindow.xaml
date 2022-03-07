@@ -7,17 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-        <uc:InitiativeRecord 
-            Image="C:\Users\rjshe\source\repos\ToolsIgnota\ToolsIgnota.UI\ToolsIgnota.UI\Assets\Emmyth_Icon.png"
-            DisplayName="Emmyth Virrieth"
-            IsHighlighted="True">
-        </uc:InitiativeRecord>
-        <uc:InitiativeRecord 
-            Image="C:\Users\rjshe\source\repos\ToolsIgnota\ToolsIgnota.UI\ToolsIgnota.UI\Assets\Alexander_Icon.png"
-            DisplayName="Alexander Hannay"
-            IsHighlighted="False">
-        </uc:InitiativeRecord>
-    </StackPanel>
+    <NavigationView
+        x:Name="navMenu"
+        SelectionChanged="NavMenu_SelectionChanged"
+        IsSettingsVisible="False">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Icon="People" Content="Initiative Display" Tag="InitiativeControlPage" />
+        </NavigationView.MenuItems>
+        <Frame x:Name="contentFrame" Padding="10"/>
+    </NavigationView>
 </Window>

@@ -47,6 +47,8 @@ namespace ToolsIgnota.UI
             main_window.Activate();
         }
 
-        private Window main_window;
+        private static Window main_window;
+
+        public static Window Window => main_window;
     }
 }

@@ -28,9 +28,24 @@ namespace ToolsIgnota.UI.Windows
             this.InitializeComponent();
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
+        private void NavMenu_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
-            myButton.Content = "Clicked";
+            if (args.IsSettingsSelected)
+            {
+                //contentFrame.Navigate(typeof(SampleSettingsPage));
+            }
+            else
+            {
+                var selectedItem = (NavigationViewItem)args.SelectedItem;
+                if (selectedItem != null)
+                {
+                    sender.Header = selectedItem.Content;
+                    string pageName = "ToolsIgnota.UI.Pages." + (string)selectedItem.Tag;
+                    Type pageType = Type.GetType(pageName);
+                    if(pageType != null)
+                        contentFrame.Navigate(pageType);
+                }
+            }
         }
     }
 }

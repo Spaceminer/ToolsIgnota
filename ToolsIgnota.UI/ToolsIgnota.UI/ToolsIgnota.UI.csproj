@@ -10,7 +10,12 @@
     <UseWinUI>true</UseWinUI>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\Tavern.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Pages\InitiativeControlPage.xaml" />
     <None Remove="UserControls\InitiativeRecord.xaml" />
+    <None Remove="Windows\InitiativeDisplay.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Windows\InitiativeDisplay.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Update="Window\InitiativeDisplay.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -29,6 +40,12 @@
 
   <ItemGroup>
     <Page Update="UserControls\InitiativeRecord.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Pages\InitiativeControlPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
