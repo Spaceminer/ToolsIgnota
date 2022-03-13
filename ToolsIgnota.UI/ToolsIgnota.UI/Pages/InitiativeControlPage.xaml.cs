@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using ToolsIgnota.Backend;
 using ToolsIgnota.Backend.Models;
 using ToolsIgnota.UI.UserControls;
@@ -46,19 +47,27 @@ namespace ToolsIgnota.UI.Pages
             button_launch.IsEnabled = true;
             button_pickImage.IsEnabled = false;
 
-            await _client.StopListening();
+            _client.StopListening();
         }
 
         private async void button_launch_Click(object sender, RoutedEventArgs e)
         {
             display_window = new InitiativeDisplayWindow(this, _creatureImageDictionary.Values);
-            display_window.Activate();
 
             button_launch.IsEnabled = false;
             button_pickImage.IsEnabled = true;
 
-            await _client.StartListening(x => this.DispatcherQueue.TryEnqueue(
+            display_window.Activate();
+
+            try
+            {
+                await _client.StartListening(x => this.DispatcherQueue.TryEnqueue(
                 () => display_window.UpdateInitiativeDisplay(x.Data.CombatList)));
+            }
+            catch (TaskCanceledException ex)
+            {
+                display_window.Close();
+            }
         }
 
         private async void button_pickImage_Click(object sender, RoutedEventArgs e)

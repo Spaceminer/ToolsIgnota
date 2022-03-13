@@ -7,5 +7,5 @@ await client.StartListening(x =>
     Console.WriteLine(x.Id);
 });
 while (Console.ReadLine() != "stop") { };
-await client.StopListening();
+client.StopListening();
 Console.WriteLine("Stopped.");

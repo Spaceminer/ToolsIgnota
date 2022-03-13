@@ -12,17 +12,21 @@ namespace ToolsIgnota.Backend
 {
     public class CombatManagerClient
     {
-        private readonly ClientWebSocket _client;
-        private readonly CancellationTokenSource _cancellation;
+        private ClientWebSocket _client;
+        private CancellationTokenSource _cancellation;
 
         public CombatManagerClient()
         {
-            _client = new ClientWebSocket();
-            _cancellation = new CancellationTokenSource();
+
         }
 
         public async Task StartListening(Action<CombatManagerResponse<CMState>> callback)
         {
+            if (_cancellation != null && !_cancellation.IsCancellationRequested)
+                return;
+                
+            _client = new ClientWebSocket();
+            _cancellation = new CancellationTokenSource();
             await _client.ConnectAsync(new Uri("ws://localhost:12457/api/notifications"), _cancellation.Token);
 
             _ = Task.Factory.StartNew(
@@ -50,9 +54,9 @@ namespace ToolsIgnota.Backend
                 }, _cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
-        public async Task StopListening()
+        public void StopListening()
         {
-            await _client.CloseAsync(WebSocketCloseStatus.NormalClosure, null, new CancellationToken());
+            _client.Dispose();
             _cancellation.Cancel();
         }
     }
