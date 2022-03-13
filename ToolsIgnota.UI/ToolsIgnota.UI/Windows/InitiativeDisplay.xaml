@@ -7,27 +7,32 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Closed="Window_Closed">
-    <Grid x:Name="container">
+    <Grid 
+        x:Name="container">
         <Grid.Background>
             <ImageBrush Stretch="Uniform" ImageSource="C:\Users\rjshe\source\repos\ToolsIgnota\ToolsIgnota.UI\ToolsIgnota.UI\Assets\Tavern.jpg" AlignmentX="Center" AlignmentY="Center"></ImageBrush>
         </Grid.Background>
-        <StackPanel
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Top"
-            Orientation="Horizontal">
-            <StackPanel.Background>
-                <AcrylicBrush TintColor="DarkGray" TintOpacity="0.1" FallbackColor="DarkGray"></AcrylicBrush>
-            </StackPanel.Background>
-            <uc:InitiativeRecord 
-                Image="C:\Users\rjshe\source\repos\ToolsIgnota\ToolsIgnota.UI\ToolsIgnota.UI\Assets\Emmyth_Icon.png"
-                DisplayName="Emmyth Virrieth"
-                IsHighlighted="True">
-            </uc:InitiativeRecord>
-            <uc:InitiativeRecord 
-                Image="C:\Users\rjshe\source\repos\ToolsIgnota\ToolsIgnota.UI\ToolsIgnota.UI\Assets\Alexander_Icon.png"
-                DisplayName="Alexander Hannay"
-                IsHighlighted="False">
-            </uc:InitiativeRecord>
-        </StackPanel>
+        <Grid RowDefinitions="Auto, Auto, *">
+            <Rectangle Grid.Row="0" Grid.RowSpan="2">
+                <Rectangle.Fill>
+                    <AcrylicBrush TintColor="DarkGray" TintOpacity="0.1" FallbackColor="DarkGray"></AcrylicBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock 
+                x:Name="text_roundLabel"
+                FontSize="24"
+                HorizontalAlignment="Center"
+                Grid.Row="0">
+                Round 1
+            </TextBlock>
+            <StackPanel
+                x:Name="panel_initiative"
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
+            </StackPanel>
+            <Rectangle Grid.Row="2" Fill="Transparent"></Rectangle>
+        </Grid>
     </Grid>
 </Window>

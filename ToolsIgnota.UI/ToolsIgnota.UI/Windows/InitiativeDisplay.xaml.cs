@@ -10,8 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using ToolsIgnota.Backend;
+using ToolsIgnota.Backend.Models;
 using ToolsIgnota.UI.Pages;
+using ToolsIgnota.UI.UserControls;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -26,16 +31,47 @@ namespace ToolsIgnota.UI.Windows
     public sealed partial class InitiativeDisplayWindow : Window
     {
         private readonly InitiativeControlPage _controlPage;
+        private readonly Dictionary<Guid, InitiativeRecord> _records;
 
         public InitiativeDisplayWindow(InitiativeControlPage controlPage)
         {
             this.InitializeComponent();
             _controlPage = controlPage ?? throw new ArgumentNullException(nameof(controlPage));
+            _records = new Dictionary<Guid, InitiativeRecord>();
         }
 
         public void SetBackgroundImage(Uri path)
         {
             ((ImageBrush)container.Background).ImageSource = new BitmapImage(path);
+        }
+
+        public void UpdateInitiativeDisplay(IEnumerable<CMCreature> creatures)
+        {
+            foreach(var creature in creatures)
+            {
+                if(!_records.ContainsKey(creature.ID))
+                {
+                    _records.Add(creature.ID, new InitiativeRecord
+                    {
+                        DisplayName = creature.Name,
+                        IsHighlighted = creature.IsActive,
+                    });
+                }
+                else
+                {
+                    _records[creature.ID].IsHighlighted = creature.IsActive;
+                }
+            }
+
+            var orderedCreatures = creatures.OrderByDescending(x => x.InitiativeCount).ToList();
+            int activeIndex = orderedCreatures.FindIndex(x => x.IsActive);
+            var offsetCreatures = orderedCreatures.Skip(activeIndex).Concat(orderedCreatures.Take(activeIndex));
+
+            panel_initiative.Children.Clear();
+            foreach(var entry in offsetCreatures)
+            {
+                panel_initiative.Children.Add(_records[entry.ID]);
+            }
         }
 
         private void Window_Closed(object sender, WindowEventArgs args)

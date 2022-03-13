@@ -10,11 +10,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using ToolsIgnota.Backend;
 using ToolsIgnota.UI.Windows;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.UI.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,25 +29,32 @@ namespace ToolsIgnota.UI.Pages
     public sealed partial class InitiativeControlPage : Page
     {
         private InitiativeDisplayWindow display_window;
+        private readonly CombatManagerClient _client;
 
         public InitiativeControlPage()
         {
             this.InitializeComponent();
+            _client = new CombatManagerClient();
         }
 
-        public void DisplayWindowClosed()
+        public async void DisplayWindowClosed()
         {
             button_launch.IsEnabled = true;
             button_pickImage.IsEnabled = false;
+
+            await _client.StopListening();
         }
 
-        private void button_launch_Click(object sender, RoutedEventArgs e)
+        private async void button_launch_Click(object sender, RoutedEventArgs e)
         {
             display_window = new InitiativeDisplayWindow(this);
             display_window.Activate();
 
             button_launch.IsEnabled = false;
             button_pickImage.IsEnabled = true;
+
+            await _client.StartListening(x => this.DispatcherQueue.TryEnqueue(
+                () => display_window.UpdateInitiativeDisplay(x.Data.CombatList)));
         }
 
         private async void button_pickImage_Click(object sender, RoutedEventArgs e)
