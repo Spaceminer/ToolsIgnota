@@ -30,7 +30,13 @@
                 Grid.Row="1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                Spacing="10">
+                <StackPanel.ChildrenTransitions>
+                    <AddDeleteThemeTransition></AddDeleteThemeTransition>
+                    <EntranceThemeTransition IsStaggeringEnabled="True"></EntranceThemeTransition>
+                    <RepositionThemeTransition></RepositionThemeTransition>
+                </StackPanel.ChildrenTransitions>
             </StackPanel>
             <Rectangle Grid.Row="2" Fill="Transparent"></Rectangle>
         </Grid>

@@ -65,12 +65,22 @@ namespace ToolsIgnota.UI.Windows
 
             var orderedCreatures = creatures.OrderByDescending(x => x.InitiativeCount).ToList();
             int activeIndex = orderedCreatures.FindIndex(x => x.IsActive);
-            var offsetCreatures = orderedCreatures.Skip(activeIndex).Concat(orderedCreatures.Take(activeIndex));
+            int offset = (activeIndex + (orderedCreatures.Count() / 2) + 1) % orderedCreatures.Count();
+            var offsetCreatures = orderedCreatures.Skip(offset).Concat(orderedCreatures.Take(offset)).ToList();
 
             panel_initiative.Children.Clear();
-            foreach(var entry in offsetCreatures)
+            for(int i = 0; i < offsetCreatures.Count(); i++)
             {
-                panel_initiative.Children.Add(_records[entry.ID]);
+                CMCreature creature = offsetCreatures[i];
+                if(i == offsetCreatures.Count() - 1)
+                {
+                    _records[creature.ID] = new InitiativeRecord
+                    {
+                        DisplayName = creature.Name,
+                        IsHighlighted = creature.IsActive,
+                    };
+                }
+                panel_initiative.Children.Add(_records[creature.ID]);
             }
         }
 
