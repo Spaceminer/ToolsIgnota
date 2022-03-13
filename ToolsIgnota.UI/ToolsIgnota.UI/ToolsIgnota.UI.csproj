@@ -14,8 +14,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\InitiativeControlPage.xaml" />
+    <None Remove="UserControls\CreatureImageEntry.xaml" />
     <None Remove="UserControls\InitiativeRecord.xaml" />
-    <None Remove="Windows\InitiativeDisplay.xaml" />
+    <None Remove="Windows\InitiativeDisplayWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +32,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Windows\InitiativeDisplay.xaml">
+    <Page Update="UserControls\CreatureImageEntry.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Windows\InitiativeDisplayWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

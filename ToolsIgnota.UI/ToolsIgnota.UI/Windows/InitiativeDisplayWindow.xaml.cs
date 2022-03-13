@@ -32,12 +32,14 @@ namespace ToolsIgnota.UI.Windows
     {
         private readonly InitiativeControlPage _controlPage;
         private readonly Dictionary<Guid, InitiativeRecord> _records;
+        private readonly IEnumerable<ImageNamePair> _creatureImages;
 
-        public InitiativeDisplayWindow(InitiativeControlPage controlPage)
+        public InitiativeDisplayWindow(InitiativeControlPage controlPage, IEnumerable<ImageNamePair> creatureImages)
         {
             this.InitializeComponent();
             _controlPage = controlPage ?? throw new ArgumentNullException(nameof(controlPage));
             _records = new Dictionary<Guid, InitiativeRecord>();
+            _creatureImages = creatureImages ?? throw new ArgumentNullException(nameof(creatureImages));
         }
 
         public void SetBackgroundImage(Uri path)
@@ -53,6 +55,7 @@ namespace ToolsIgnota.UI.Windows
                 {
                     _records.Add(creature.ID, new InitiativeRecord
                     {
+                        Image = FindImageUri(creature.Name),
                         DisplayName = creature.Name,
                         IsHighlighted = creature.IsActive,
                     });
@@ -76,6 +79,7 @@ namespace ToolsIgnota.UI.Windows
                 {
                     _records[creature.ID] = new InitiativeRecord
                     {
+                        Image = FindImageUri(creature.Name),
                         DisplayName = creature.Name,
                         IsHighlighted = creature.IsActive,
                     };
@@ -87,6 +91,11 @@ namespace ToolsIgnota.UI.Windows
         private void Window_Closed(object sender, WindowEventArgs args)
         {
             _controlPage.DisplayWindowClosed();
+        }
+
+        private string FindImageUri(string name)
+        {
+            return _creatureImages.Where(x => name.Contains(x.Name)).FirstOrDefault()?.Image;
         }
     }
 }

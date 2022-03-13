@@ -11,6 +11,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using ToolsIgnota.Backend;
+using ToolsIgnota.Backend.Models;
+using ToolsIgnota.UI.UserControls;
 using ToolsIgnota.UI.Windows;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -30,11 +32,13 @@ namespace ToolsIgnota.UI.Pages
     {
         private InitiativeDisplayWindow display_window;
         private readonly CombatManagerClient _client;
+        private readonly Dictionary<Guid, ImageNamePair> _creatureImageDictionary;
 
         public InitiativeControlPage()
         {
             this.InitializeComponent();
             _client = new CombatManagerClient();
+            _creatureImageDictionary = new Dictionary<Guid, ImageNamePair>();
         }
 
         public async void DisplayWindowClosed()
@@ -47,7 +51,7 @@ namespace ToolsIgnota.UI.Pages
 
         private async void button_launch_Click(object sender, RoutedEventArgs e)
         {
-            display_window = new InitiativeDisplayWindow(this);
+            display_window = new InitiativeDisplayWindow(this, _creatureImageDictionary.Values);
             display_window.Activate();
 
             button_launch.IsEnabled = false;
@@ -74,6 +78,18 @@ namespace ToolsIgnota.UI.Pages
             {
                 display_window.SetBackgroundImage(new Uri(file.Path));
             }
+        }
+
+        private void button_addCreature_Click(object sender, RoutedEventArgs e)
+        {
+            Guid guid = Guid.NewGuid();
+            _creatureImageDictionary.Add(guid, new ImageNamePair());
+            var creature = new CreatureImageEntry(guid, _creatureImageDictionary[guid], x => 
+                {
+                    _creatureImageDictionary.Remove(guid);
+                    panel_creatureImages.Children.Remove(x);
+                });
+            panel_creatureImages.Children.Add(creature);
         }
     }
 }

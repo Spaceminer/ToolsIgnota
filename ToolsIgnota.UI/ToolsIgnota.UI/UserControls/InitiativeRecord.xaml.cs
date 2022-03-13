@@ -23,7 +23,7 @@ namespace ToolsIgnota.UI.UserControls
     {
         public string Image
         {
-            set { picture.ProfilePicture = new BitmapImage(new Uri(value)); }
+            set { picture.ProfilePicture = value != null ? new BitmapImage(new Uri(value)) : null; }
         }
 
         public string DisplayName
