@@ -15,29 +15,28 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using ToolsIgnota.Backend;
 using ToolsIgnota.Backend.Models;
-using ToolsIgnota.UI.Pages;
-using ToolsIgnota.UI.UserControls;
+using ToolsIgnota.UI.Views.UserControls;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace ToolsIgnota.UI.Windows
+namespace ToolsIgnota.UI.Views.Windows
 {
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class InitiativeDisplayWindow : Window
     {
-        private readonly InitiativeControlPage _controlPage;
+        private readonly Action _windowClosedCallback;
         private readonly Dictionary<Guid, InitiativeRecord> _records;
-        private readonly IEnumerable<ImageNamePair> _creatureImages;
+        private readonly IEnumerable<CreatureImage> _creatureImages;
 
-        public InitiativeDisplayWindow(InitiativeControlPage controlPage, IEnumerable<ImageNamePair> creatureImages)
+        public InitiativeDisplayWindow(IEnumerable<CreatureImage> creatureImages, Action windowClosedCallback)
         {
             this.InitializeComponent();
-            _controlPage = controlPage ?? throw new ArgumentNullException(nameof(controlPage));
+            _windowClosedCallback = windowClosedCallback ?? throw new ArgumentNullException(nameof(windowClosedCallback));
             _records = new Dictionary<Guid, InitiativeRecord>();
             _creatureImages = creatureImages ?? throw new ArgumentNullException(nameof(creatureImages));
         }
@@ -90,7 +89,7 @@ namespace ToolsIgnota.UI.Windows
 
         private void Window_Closed(object sender, WindowEventArgs args)
         {
-            _controlPage.DisplayWindowClosed();
+            _windowClosedCallback();
         }
 
         private string FindImageUri(string name)

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ToolsIgnota.Backend.Models
 {
-    public class ImageNamePair
+    public class CreatureImage
     {
-        public string Name { get; set; }
-        public string Image { get; set; }
+        public string Name { get; set; } = "";
+        public string Image { get; set; } = "..";
     }
 }

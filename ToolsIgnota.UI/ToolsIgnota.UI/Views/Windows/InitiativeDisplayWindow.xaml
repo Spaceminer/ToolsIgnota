@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="ToolsIgnota.UI.Windows.InitiativeDisplayWindow"
+    x:Class="ToolsIgnota.UI.Views.Windows.InitiativeDisplayWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:uc="using:ToolsIgnota.UI.UserControls"

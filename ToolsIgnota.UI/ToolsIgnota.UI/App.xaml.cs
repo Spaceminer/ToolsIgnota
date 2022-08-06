@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -11,7 +12,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using ToolsIgnota.UI.Windows;
+using ToolsIgnota.Backend;
+using ToolsIgnota.Backend.Abstractions;
+using ToolsIgnota.UI.Views.Windows;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -27,6 +30,11 @@ namespace ToolsIgnota.UI
     /// </summary>
     public partial class App : Application
     {
+        public IServiceProvider Container { get; }
+
+        private static Window main_window;
+        public static Window Window => main_window;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -34,6 +42,7 @@ namespace ToolsIgnota.UI
         public App()
         {
             this.InitializeComponent();
+            Container = ConfigureDependencyInjection();
         }
 
         /// <summary>
@@ -47,8 +56,13 @@ namespace ToolsIgnota.UI
             main_window.Activate();
         }
 
-        private static Window main_window;
+        private IServiceProvider ConfigureDependencyInjection()
+        {
+            var serviceCollection = new ServiceCollection();
 
-        public static Window Window => main_window;
+            serviceCollection.AddSingleton<ISettings, SettingsRepository>();
+
+            return serviceCollection.BuildServiceProvider();
+        }
     }
 }

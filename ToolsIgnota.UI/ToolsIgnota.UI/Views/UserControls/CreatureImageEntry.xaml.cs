@@ -12,7 +12,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using ToolsIgnota.Backend.Models;
-using ToolsIgnota.UI.Pages;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -21,19 +20,22 @@ using Windows.Storage.Pickers;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace ToolsIgnota.UI.UserControls
+namespace ToolsIgnota.UI.Views.UserControls
 {
     public sealed partial class CreatureImageEntry : UserControl
     {
-        private readonly Guid _guid;
-        private readonly ImageNamePair _imageNamePair;
+        private readonly Action<string> _updateTextCallback;
+        private readonly Action<string> _updateImageCallback;
         private readonly Action<CreatureImageEntry> _deleteCallback;
 
-        public CreatureImageEntry(Guid guid, ImageNamePair imageNamePair, Action<CreatureImageEntry> deleteCallback)
+        public CreatureImageEntry(
+            Action<string> updateTextCallback,
+            Action<string> updateImageCallback,
+            Action<CreatureImageEntry> deleteCallback)
         {
             this.InitializeComponent();
-            _guid = guid;
-            _imageNamePair = imageNamePair;
+            _updateTextCallback = updateTextCallback;
+            _updateImageCallback = updateImageCallback;
             _deleteCallback = deleteCallback;
         }
 
@@ -44,7 +46,7 @@ namespace ToolsIgnota.UI.UserControls
 
         private void textbox_name_TextChanged(object sender, TextChangedEventArgs e)
         {
-            _imageNamePair.Name = textbox_name.Text;
+            _updateTextCallback(textbox_name.Text);
         }
 
         private async void button_image_Click(object sender, RoutedEventArgs e)
@@ -62,8 +64,8 @@ namespace ToolsIgnota.UI.UserControls
             StorageFile file = await picker.PickSingleFileAsync();
             if (file != null)
             {
-                _imageNamePair.Image = file.Path;
                 image_button_image.Source = new BitmapImage(new Uri(file.Path));
+                _updateImageCallback(file.Path);
             }
         }
     }

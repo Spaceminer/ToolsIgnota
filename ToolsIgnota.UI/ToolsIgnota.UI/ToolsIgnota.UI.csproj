@@ -14,12 +14,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\InitiativeControlPage.xaml" />
-    <None Remove="UserControls\CreatureImageEntry.xaml" />
-    <None Remove="UserControls\InitiativeRecord.xaml" />
     <None Remove="Windows\InitiativeDisplayWindow.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Remove="App.xaml" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-experimental1" />
     <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.0.0-experimental1" />
     <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.0.0-experimental1" />
@@ -32,9 +35,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="UserControls\CreatureImageEntry.xaml">
+    <None Update="App.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -45,12 +48,6 @@
 
   <ItemGroup>
     <Page Update="Window\InitiativeDisplay.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="UserControls\InitiativeRecord.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

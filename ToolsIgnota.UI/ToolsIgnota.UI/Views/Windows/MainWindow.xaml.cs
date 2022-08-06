@@ -16,7 +16,7 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace ToolsIgnota.UI.Windows
+namespace ToolsIgnota.UI.Views.Windows
 {
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
@@ -40,7 +40,7 @@ namespace ToolsIgnota.UI.Windows
                 if (selectedItem != null)
                 {
                     sender.Header = selectedItem.Content;
-                    string pageName = "ToolsIgnota.UI.Pages." + (string)selectedItem.Tag;
+                    string pageName = "ToolsIgnota.UI.Views.Pages." + (string)selectedItem.Tag;
                     Type pageType = Type.GetType(pageName);
                     if(pageType != null)
                         contentFrame.Navigate(pageType);
