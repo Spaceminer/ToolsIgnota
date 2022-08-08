@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using ToolsIgnota.Data.Abstractions;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
 namespace ToolsIgnota.UI.Utilities
 {
-    public static class FilePicker
+    public class FilePickerService : IFilePickerService
     {
-        public static async Task<StorageFile> GetImage()
+        public async Task<StorageFile> GetImage()
         {
             return await GetFile(
                 PickerViewMode.Thumbnail,
@@ -18,7 +16,7 @@ namespace ToolsIgnota.UI.Utilities
                 ".png", ".jpg", ".bmp");
         }
 
-        public static async Task<StorageFile> GetFile(
+        public async Task<StorageFile> GetFile(
             PickerViewMode viewMode, 
             PickerLocationId startLocation, 
             params string[] fileExtensions)

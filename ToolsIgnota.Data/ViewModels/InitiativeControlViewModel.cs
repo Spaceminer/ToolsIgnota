@@ -2,26 +2,39 @@
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using ToolsIgnota.Backend.Abstractions;
-using ToolsIgnota.Backend.Models;
+using ToolsIgnota.Data.Abstractions;
+using ToolsIgnota.Data.Models;
 using ToolsIgnota.UI.Models;
-using ToolsIgnota.UI.Utilities;
 
 namespace ToolsIgnota.UI.ViewModels
 {
     public partial class InitiativeControlViewModel : ObservableObject
     {
-        private readonly ISettings _settings;
-
-        public InitiativeControlViewModel(ISettings settings)
-        {
-            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
-        }
+        private readonly IFilePickerService _filePickerService;
+        private readonly ICreatureImageService _creatureImageService;
 
         public ObservableCollection<CreatureImageModel> CreatureImageList { get; set; } = new();
+
+        public InitiativeControlViewModel(
+            IFilePickerService filePickerService,
+            ICreatureImageService creatureImageService)
+        {
+            _filePickerService = filePickerService ?? throw new ArgumentNullException(nameof(filePickerService));
+            _creatureImageService = creatureImageService ?? throw new ArgumentNullException(nameof(creatureImageService));
+
+            using var cancellation = new CancellationTokenSource();
+            creatureImageService.GetCreatureImages().Subscribe(images =>
+            {
+                CreatureImageList =
+                    new ObservableCollection<CreatureImageModel>(
+                        images.Select(x => new CreatureImageModel(x)));
+                cancellation.Cancel();
+            }, cancellation.Token);
+        }
 
         [RelayCommand]
         public void AddCreatureImage()
@@ -34,16 +47,22 @@ namespace ToolsIgnota.UI.ViewModels
         {
             var entry = CreatureImageList.Where(x => x.Id == id).FirstOrDefault();
             if(entry != null)
+            {
                 CreatureImageList.Remove(entry);
+                SaveCreatureImages();
+            }
         }
 
         [RelayCommand]
         public async Task UpdateCreatureImage(Guid id)
         {
-            var image = await FilePicker.GetImage();
+            var image = await _filePickerService.GetImage();
             var entry = CreatureImageList.Where(x => x.Id == id).FirstOrDefault();
             if (image != null)
+            {
                 entry.Image = image.Path;
+                SaveCreatureImages();
+            }
         }
 
         private bool CanLaunchDisplay => CombatManagerUri?.Split(":").All(x => !string.IsNullOrWhiteSpace(x)) ?? false;
@@ -65,5 +84,10 @@ namespace ToolsIgnota.UI.ViewModels
         private string combatManagerPort;
 
         public string CombatManagerUri => $"{combatManagerIpAddress}:{combatManagerPort}";
+
+        public void SaveCreatureImages()
+        {
+            _creatureImageService.SaveCreatureImages(CreatureImageList.Select(x => new CreatureImage { Name = x.Name, Image = x.Image }));
+        }
     }
 }

@@ -24,7 +24,10 @@
             x:Key="CreatureImageListTemplate"
             x:DataType="models:CreatureImageModel">
             <StackPanel Orientation="Horizontal" Height="35" Spacing="5">
-                <TextBox Text="{x:Bind Name, Mode=TwoWay}" Width="256"/>
+                <TextBox 
+                    Width="256"
+                    Text="{x:Bind Name, Mode=TwoWay}" 
+                    TextChanged="TextBox_TextChanged"/>
                 <Button
                     Height="35"
                     MinWidth="35"

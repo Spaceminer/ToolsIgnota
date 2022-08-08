@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ToolsIgnota.Backend.Extensions
+namespace ToolsIgnota.Data.Extensions
 {
     public static class LinqExtensions
     {

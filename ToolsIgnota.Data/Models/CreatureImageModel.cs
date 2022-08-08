@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ToolsIgnota.Backend.Models;
+using ToolsIgnota.Data.Models;
 
 namespace ToolsIgnota.UI.Models
 {
@@ -12,6 +12,11 @@ namespace ToolsIgnota.UI.Models
     {
         private readonly CreatureImage _data;
         public Guid Id { get; set; } = Guid.NewGuid();
+
+        public CreatureImageModel()
+        {
+            _data = new CreatureImage();
+        }
 
         public CreatureImageModel(CreatureImage data)
         {

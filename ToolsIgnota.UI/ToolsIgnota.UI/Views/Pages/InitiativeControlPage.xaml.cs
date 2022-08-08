@@ -12,10 +12,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using ToolsIgnota.Backend;
-using ToolsIgnota.Backend.Abstractions;
-using ToolsIgnota.Backend.Extensions;
-using ToolsIgnota.Backend.Models;
+using ToolsIgnota.Data;
+using ToolsIgnota.Data.Abstractions;
+using ToolsIgnota.Data.Extensions;
+using ToolsIgnota.Data.Models;
 using ToolsIgnota.UI.ViewModels;
 using ToolsIgnota.UI.Views.UserControls;
 using ToolsIgnota.UI.Views.Windows;
@@ -41,8 +41,7 @@ namespace ToolsIgnota.UI.Views.Pages
         {
             this.InitializeComponent();
             var container = ((App)Application.Current).Container;
-            VM = new InitiativeControlViewModel(new SettingsRepository());
-                //ActivatorUtilities.GetServiceOrCreateInstance<InitiativeControlViewModel>(container);
+            VM = ActivatorUtilities.GetServiceOrCreateInstance<InitiativeControlViewModel>(container);
         }
 
         #region OldCode
@@ -139,5 +138,10 @@ namespace ToolsIgnota.UI.Views.Pages
         //    AddCreatureImageEntry(Guid.NewGuid(), new CreatureImage());
         //}
         #endregion
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VM.SaveCreatureImages();
+        }
     }
 }

@@ -7,7 +7,9 @@ Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "ToolsIgnota.UI (Package)", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToolsIgnota.UI", "ToolsIgnota.UI\ToolsIgnota.UI\ToolsIgnota.UI.csproj", "{AB414C1E-25CA-4E56-9B44-3EF5DCC46CDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsIgnota.Backend", "ToolsIgnota.Backend\ToolsIgnota.Backend.csproj", "{086ED5EB-D832-4154-A023-C295D9BD5256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToolsIgnota.Data", "ToolsIgnota.Backend\ToolsIgnota.Data.csproj", "{086ED5EB-D832-4154-A023-C295D9BD5256}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsIgnota.Infrastructure", "ToolsIgnota.Data\ToolsIgnota.Infrastructure.csproj", "{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,22 @@ Global
 		{086ED5EB-D832-4154-A023-C295D9BD5256}.Release|x64.Build.0 = Release|Any CPU
 		{086ED5EB-D832-4154-A023-C295D9BD5256}.Release|x86.ActiveCfg = Release|Any CPU
 		{086ED5EB-D832-4154-A023-C295D9BD5256}.Release|x86.Build.0 = Release|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Debug|arm64.Build.0 = Debug|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Debug|x64.Build.0 = Debug|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Debug|x86.Build.0 = Debug|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Release|arm64.ActiveCfg = Release|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Release|arm64.Build.0 = Release|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Release|x64.ActiveCfg = Release|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Release|x64.Build.0 = Release|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Release|x86.ActiveCfg = Release|Any CPU
+		{DC69E2C6-5EAC-4E4C-A2F6-177FFBFE60EF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
