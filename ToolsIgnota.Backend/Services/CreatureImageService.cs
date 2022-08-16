@@ -16,25 +16,25 @@ namespace ToolsIgnota.Data.Services
     {
         private readonly string _settingName = "CreatureImages";
         private readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-        private readonly ISubject<IEnumerable<CreatureImage>> _imagesSubject;
-
-        public CreatureImageService()
-        {
-            try
-            {
-                var startingValue = localSettings.Values.ContainsKey(_settingName)
-                ? JsonSerializer.Deserialize<IEnumerable<CreatureImage>>((string)localSettings.Values[_settingName])
-                : Enumerable.Empty<CreatureImage>();
-                _imagesSubject = new BehaviorSubject<IEnumerable<CreatureImage>>(startingValue);
-            }
-            catch (JsonException ex)
-            {
-                _imagesSubject = new BehaviorSubject<IEnumerable<CreatureImage>>(Enumerable.Empty<CreatureImage>());
-            }
-        }
+        private ISubject<IEnumerable<CreatureImage>> _imagesSubject;
 
         public IObservable<IEnumerable<CreatureImage>> GetCreatureImages()
         {
+            if (_imagesSubject == null)
+            {
+                try
+                {
+                    var startingValue = localSettings.Values.ContainsKey(_settingName)
+                    ? JsonSerializer.Deserialize<IEnumerable<CreatureImage>>((string)localSettings.Values[_settingName])
+                    : Enumerable.Empty<CreatureImage>();
+                    _imagesSubject = new BehaviorSubject<IEnumerable<CreatureImage>>(startingValue);
+                }
+                catch (JsonException ex)
+                {
+                    _imagesSubject = new BehaviorSubject<IEnumerable<CreatureImage>>(Enumerable.Empty<CreatureImage>());
+                }
+            }
+
             return _imagesSubject.AsObservable();
         }
 

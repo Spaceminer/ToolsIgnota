@@ -31,6 +31,11 @@ namespace ToolsIgnota.Data
                 TaskScheduler.Default);
         }
 
+        public IObservable<CombatManagerResponse<CMState>> GetState()
+        {
+            return _subject.AsObservable();
+        }
+
         public void Dispose()
         {
             _cancellation.Cancel();
