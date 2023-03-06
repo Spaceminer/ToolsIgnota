@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "ToolsIgnota (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "ToolsIgnota (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
