@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="ToolsIgnota.UI.Views.Pages.InitiativeControlPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ToolsIgnota.UI.Views.Pages"
+    xmlns:models="using:ToolsIgnota.UI.Models" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <StandardUICommand
+            x:Name="DeleteCreatureImageCommand"
+            Kind="Delete"
+            Command="{x:Bind VM.DeleteCreatureImageCommand}"
+            Description="Remove this image"/>
+        <XamlUICommand
+            x:Name="UpdateCreatureImageCommand"
+            Command="{x:Bind VM.UpdateCreatureImageCommand}"
+            Description="Update this image"/>
+
+        <DataTemplate 
+            x:Key="CreatureImageListTemplate"
+            x:DataType="models:CreatureImageModel">
+            <StackPanel Orientation="Horizontal" Height="35" Spacing="5">
+                <TextBox 
+                    Width="256"
+                    Text="{x:Bind Name, Mode=TwoWay}" 
+                    TextChanged="TextBox_TextChanged"/>
+                <Button
+                    Height="35"
+                    MinWidth="35"
+                    Padding="2"
+                    Command="{StaticResource UpdateCreatureImageCommand}"
+                    CommandParameter="{x:Bind Id}">
+                    <Image Source="{x:Bind Image, Mode=OneWay}" Stretch="Uniform"/>
+                </Button>
+                <Button
+                    Height="35"
+                    Command="{StaticResource DeleteCreatureImageCommand}"
+                    CommandParameter="{x:Bind Id}">
+                    <SymbolIcon Symbol="Delete"/>
+                </Button>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid RowDefinitions="auto, auto, *, auto" RowSpacing="10">
+        <StackPanel 
+            Grid.Row="0"
+            Spacing="10">
+            <TextBox Header="IP Address" Text="{x:Bind VM.CombatManagerIpAddress, Mode=TwoWay}"></TextBox>
+            <TextBox Header="Port" Text="{x:Bind VM.CombatManagerPort, Mode=TwoWay}"></TextBox>
+            <Button Command="{x:Bind VM.LaunchDisplayCommand}">Launch Display</Button>
+            <Button IsEnabled="False">Pick Image</Button>
+        </StackPanel>
+        <StackPanel 
+            Grid.Row="1"
+            Orientation="Horizontal" 
+            Spacing="5">
+            <TextBlock Width="256">Creature Name</TextBlock>
+            <TextBlock>Image</TextBlock>
+        </StackPanel>
+        <ListView
+            SelectionMode="None"
+            Grid.Row="2"
+            x:Name="CreatureImageList"
+            ItemTemplate="{StaticResource CreatureImageListTemplate}"
+            ItemsSource="{x:Bind Path=VM.CreatureImageList, Mode=OneWay}">
+        </ListView>
+        <Button 
+            Grid.Row="3"
+            Command="{x:Bind VM.AddCreatureImageCommand}">
+            Add Creature
+        </Button>
+    </Grid>
+</Page>

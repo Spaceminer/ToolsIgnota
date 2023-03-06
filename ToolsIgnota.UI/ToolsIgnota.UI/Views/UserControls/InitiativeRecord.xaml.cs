@@ -17,13 +17,13 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace ToolsIgnota.UI.UserControls
+namespace ToolsIgnota.UI.Views.UserControls
 {
     public sealed partial class InitiativeRecord : UserControl
     {
         public string Image
         {
-            set { picture.ProfilePicture = new BitmapImage(new Uri(value)); }
+            set { picture.ProfilePicture = value != null ? new BitmapImage(new Uri(value)) : null; }
         }
 
         public string DisplayName

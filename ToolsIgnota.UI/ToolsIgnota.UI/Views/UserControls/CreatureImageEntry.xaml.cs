@@ -4,13 +4,14 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using ToolsIgnota.UI.Windows;
+using ToolsIgnota.Data.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -19,36 +20,36 @@ using Windows.Storage.Pickers;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace ToolsIgnota.UI.Pages
+namespace ToolsIgnota.UI.Views.UserControls
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class InitiativeControlPage : Page
+    public sealed partial class CreatureImageEntry : UserControl
     {
-        private InitiativeDisplayWindow display_window;
+        private readonly Action<string> _updateTextCallback;
+        private readonly Action<string> _updateImageCallback;
+        private readonly Action<CreatureImageEntry> _deleteCallback;
 
-        public InitiativeControlPage()
+        public CreatureImageEntry(
+            Action<string> updateTextCallback,
+            Action<string> updateImageCallback,
+            Action<CreatureImageEntry> deleteCallback)
         {
             this.InitializeComponent();
+            _updateTextCallback = updateTextCallback;
+            _updateImageCallback = updateImageCallback;
+            _deleteCallback = deleteCallback;
         }
 
-        public void DisplayWindowClosed()
+        private void button_delete_Click(object sender, RoutedEventArgs e)
         {
-            button_launch.IsEnabled = true;
-            button_pickImage.IsEnabled = false;
+            _deleteCallback(this);
         }
 
-        private void button_launch_Click(object sender, RoutedEventArgs e)
+        private void textbox_name_TextChanged(object sender, TextChangedEventArgs e)
         {
-            display_window = new InitiativeDisplayWindow(this);
-            display_window.Activate();
-
-            button_launch.IsEnabled = false;
-            button_pickImage.IsEnabled = true;
+            _updateTextCallback(textbox_name.Text);
         }
 
-        private async void button_pickImage_Click(object sender, RoutedEventArgs e)
+        private async void button_image_Click(object sender, RoutedEventArgs e)
         {
             var picker = new FileOpenPicker();
             picker.ViewMode = PickerViewMode.Thumbnail;
@@ -63,7 +64,8 @@ namespace ToolsIgnota.UI.Pages
             StorageFile file = await picker.PickSingleFileAsync();
             if (file != null)
             {
-                display_window.SetBackgroundImage(new Uri(file.Path));
+                image_button_image.Source = new BitmapImage(new Uri(file.Path));
+                _updateImageCallback(file.Path);
             }
         }
     }
