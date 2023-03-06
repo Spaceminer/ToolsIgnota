@@ -13,17 +13,18 @@ namespace ToolsIgnota.Data
 {
     public class CombatManagerConnection: IDisposable
     {
+        private readonly string _uri;
         private ClientWebSocket _client;
         private CancellationTokenSource _cancellation;
         private ISubject<CombatManagerResponse<CMState>> _subject;
 
         public CombatManagerConnection(string uri)
         {
+            _uri = uri;
             _client = new ClientWebSocket();
             _cancellation = new CancellationTokenSource();
             _subject = new ReplaySubject<CombatManagerResponse<CMState>>(1);
 
-            _client.ConnectAsync(new Uri($"ws://{uri}/api/notifications"), _cancellation.Token);
             _ = Task.Factory.StartNew(
                 CMStateListener, 
                 _cancellation.Token, 
@@ -44,6 +45,7 @@ namespace ToolsIgnota.Data
 
         private async Task CMStateListener()
         {
+            await _client.ConnectAsync(new Uri($"ws://{_uri}/api/notifications"), _cancellation.Token);
             string message = "";
             var bytes = new byte[128];
             var buffer = new ArraySegment<byte>(bytes);

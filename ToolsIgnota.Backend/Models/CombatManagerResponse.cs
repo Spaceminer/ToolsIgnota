@@ -12,7 +12,7 @@ namespace ToolsIgnota.Data.Models
 
     public record CMState
     {
-        public int Round { get; set; }
+        public int? Round { get; set; }
         public string CR { get; set; }
         public int XP { get; set; }
         public int RulesSystem { get; set; }

@@ -14,16 +14,23 @@ namespace ToolsIgnota.UI.ViewModels
     public partial class InitiativeControlViewModel : ObservableObject
     {
         private readonly IFilePickerService _filePickerService;
+        private readonly IWindowService _windowService;
+
         private readonly ICreatureImageService _creatureImageService;
+        private readonly ICombatManagerService _combatManagerService;
 
         public ObservableCollection<CreatureImageModel> CreatureImageList { get; set; } = new();
 
         public InitiativeControlViewModel(
+            IWindowService windowService,
             IFilePickerService filePickerService,
-            ICreatureImageService creatureImageService)
+            ICreatureImageService creatureImageService,
+            ICombatManagerService combatManagerService)
         {
             _filePickerService = filePickerService ?? throw new ArgumentNullException(nameof(filePickerService));
             _creatureImageService = creatureImageService ?? throw new ArgumentNullException(nameof(creatureImageService));
+            _windowService = windowService ?? throw new ArgumentNullException(nameof(windowService));
+            _combatManagerService = combatManagerService ?? throw new ArgumentNullException(nameof(combatManagerService));
 
             using var cancellation = new CancellationTokenSource();
             creatureImageService.GetCreatureImages().Subscribe(images =>
@@ -69,19 +76,20 @@ namespace ToolsIgnota.UI.ViewModels
         [RelayCommand(CanExecute = nameof(CanLaunchDisplay))]
         public Task LaunchDisplay()
         {
-
+            _combatManagerService.SetUri(CombatManagerUri);
+            _windowService.OpenDisplayWindow();
             return Task.CompletedTask;
         }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(CombatManagerUri))]
         [NotifyCanExecuteChangedFor(nameof(LaunchDisplayCommand))]
-        private string combatManagerIpAddress;
+        private string combatManagerIpAddress = "localhost";
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(CombatManagerUri))]
         [NotifyCanExecuteChangedFor(nameof(LaunchDisplayCommand))]
-        private string combatManagerPort;
+        private string combatManagerPort = "12457";
 
         public string CombatManagerUri => $"{combatManagerIpAddress}:{combatManagerPort}";
 

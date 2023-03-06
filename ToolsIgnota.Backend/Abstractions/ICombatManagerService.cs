@@ -9,6 +9,9 @@ namespace ToolsIgnota.Data.Abstractions
 {
     public interface ICombatManagerService
     {
+        public void SetUri(string uri);
+        public string GetUri();
         public IObservable<IEnumerable<CMCreature>> GetCreatures();
+        public IObservable<int?> GetRound();
     }
 }

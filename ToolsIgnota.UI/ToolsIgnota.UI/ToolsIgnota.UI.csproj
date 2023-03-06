@@ -14,6 +14,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\InitiativeControlPage.xaml" />
+    <None Remove="Views\Pages\InitiativeDisplayPage.xaml" />
+    <None Remove="Views\Windows\DisplayWindow.xaml" />
     <None Remove="Windows\InitiativeDisplayWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +40,13 @@
     <None Update="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Views\Pages\InitiativeDisplayPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\DisplayWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>
