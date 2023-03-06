@@ -69,6 +69,7 @@ namespace ToolsIgnota.UI.ViewModels
         [RelayCommand(CanExecute = nameof(CanLaunchDisplay))]
         public Task LaunchDisplay()
         {
+
             return Task.CompletedTask;
         }
 
