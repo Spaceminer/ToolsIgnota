@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Xaml;
-
+using Microsoft.UI.Xaml.Controls;
 using ToolsIgnota.Contracts.Services;
 using ToolsIgnota.Helpers;
 
@@ -13,45 +13,81 @@ using Windows.ApplicationModel;
 
 namespace ToolsIgnota.ViewModels;
 
-public class SettingsViewModel : ObservableRecipient
+public sealed partial class SettingsViewModel : ObservableRecipient, IDisposable
 {
     private readonly IThemeSelectorService _themeSelectorService;
-    private ElementTheme _elementTheme;
-    private string _versionDescription;
+    private readonly ICombatManagerService _combatManagerService;
+    private readonly List<IDisposable> _subscriptions = new();
 
-    public ElementTheme ElementTheme
-    {
-        get => _elementTheme;
-        set => SetProperty(ref _elementTheme, value);
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ConnectCombatManagerCommand))]
+    [NotifyPropertyChangedFor(nameof(CombatManagerConnectSymbol))] 
+    private string _combatManagerIp;
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ConnectCombatManagerCommand))]
+    [NotifyPropertyChangedFor(nameof(CombatManagerConnectSymbol))]
+    private string _combatManagerPort;
+    [ObservableProperty] 
+    [NotifyCanExecuteChangedFor(nameof(ConnectCombatManagerCommand))]
+    [NotifyPropertyChangedFor(nameof(CombatManagerConnectSymbol))]
+    private bool _combatManagerConnected;
+
+    [ObservableProperty] private ElementTheme _elementTheme;
+    [ObservableProperty] private string _versionDescription;
+    [ObservableProperty] private string _combatManagerConnectTooltip = "Settings_CombatManager_Connection_Tooltip_Disconnected".GetLocalized();
+    
+    public Symbol CombatManagerConnectSymbol 
+    { 
+        get
+        {
+            if (FullIpAddress != _combatManagerService.IpAddress)
+                return Symbol.Refresh;
+            if (CombatManagerConnected)
+                return Symbol.Accept;
+            return Symbol.Cancel;
+        } 
     }
 
-    public string VersionDescription
-    {
-        get => _versionDescription;
-        set => SetProperty(ref _versionDescription, value);
-    }
-
-    public ICommand SwitchThemeCommand
-    {
-        get;
-    }
-
-    public SettingsViewModel(IThemeSelectorService themeSelectorService)
+    public SettingsViewModel(
+        IThemeSelectorService themeSelectorService,
+        ICombatManagerService combatManagerService)
     {
         _themeSelectorService = themeSelectorService;
-        _elementTheme = _themeSelectorService.Theme;
-        _versionDescription = GetVersionDescription();
+        _combatManagerService = combatManagerService;
 
-        SwitchThemeCommand = new RelayCommand<ElementTheme>(
-            async (param) =>
-            {
-                if (ElementTheme != param)
-                {
-                    ElementTheme = param;
-                    await _themeSelectorService.SetThemeAsync(param);
-                }
-            });
+        _elementTheme = _themeSelectorService.Theme;
+        _combatManagerIp = _combatManagerService.IpAddress.Split(":")[0];
+        _combatManagerPort = _combatManagerService.IpAddress.Split(":")[1];
+        _versionDescription = GetVersionDescription();
+        _subscriptions.Add(_combatManagerService.Connected.Subscribe(x =>
+        {
+            CombatManagerConnected = x;
+            CombatManagerConnectTooltip = x
+                ? "Settings_CombatManager_Connection_Tooltip_Connected".GetLocalized()
+                : "Settings_CombatManager_Connection_Tooltip_Error".GetLocalized();
+            OnPropertyChanged(nameof(CombatManagerConnectSymbol));
+        }));
     }
+
+    private bool CanConnectCombatManager => !CombatManagerConnected || FullIpAddress != _combatManagerService.IpAddress;
+    [RelayCommand(CanExecute = nameof(CanConnectCombatManager))]
+    public async Task ConnectCombatManager()
+    {
+        await _combatManagerService.SetIpAddress(FullIpAddress);
+        await _combatManagerService.Connect();
+    }
+
+    [RelayCommand]
+    public async Task SwitchTheme(ElementTheme param)
+    {
+        if (ElementTheme != param)
+        {
+            ElementTheme = param;
+            await _themeSelectorService.SetThemeAsync(param);
+        }
+    }
+
+    private string FullIpAddress => $"{CombatManagerIp}:{CombatManagerPort}";
 
     private static string GetVersionDescription()
     {
@@ -69,5 +105,10 @@ public class SettingsViewModel : ObservableRecipient
         }
 
         return $"{"AppDisplayName".GetLocalized()} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+    }
+
+    public void Dispose()
+    {
+        _subscriptions.ForEach(x => x.Dispose());
     }
 }

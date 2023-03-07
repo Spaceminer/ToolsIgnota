@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml.Controls;
 
 using ToolsIgnota.Activation;
+using ToolsIgnota.Contracts;
 using ToolsIgnota.Contracts.Services;
 using ToolsIgnota.Views;
 
@@ -11,14 +12,20 @@ public class ActivationService : IActivationService
 {
     private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
-    private readonly IThemeSelectorService _themeSelectorService;
+    private readonly IEnumerable<IOnInitialize> _initializeHooks;
+    private readonly IEnumerable<IOnStartup> _startupHooks;
     private UIElement? _shell = null;
 
-    public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService)
+    public ActivationService(
+        ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
+        IEnumerable<IActivationHandler> activationHandlers,
+        IEnumerable<IOnInitialize> initializeHooks,
+        IEnumerable<IOnStartup> startupHooks)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
-        _themeSelectorService = themeSelectorService;
+        _initializeHooks = initializeHooks;
+        _startupHooks = startupHooks;
     }
 
     public async Task ActivateAsync(object activationArgs)
@@ -60,13 +67,19 @@ public class ActivationService : IActivationService
 
     private async Task InitializeAsync()
     {
-        await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
+        foreach (var hooks in _initializeHooks)
+        {
+            await hooks.InitializeAsync().ConfigureAwait(false);
+        }
         await Task.CompletedTask;
     }
 
     private async Task StartupAsync()
     {
-        await _themeSelectorService.SetRequestedThemeAsync();
+        foreach (var hook in _startupHooks)
+        {
+            await hook.StartupAsync().ConfigureAwait(false);
+        }
         await Task.CompletedTask;
     }
 }

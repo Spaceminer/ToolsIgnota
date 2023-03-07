@@ -2,14 +2,12 @@
 
 namespace ToolsIgnota.Contracts.Services;
 
-public interface IThemeSelectorService
+public interface IThemeSelectorService : IOnInitialize, IOnStartup
 {
     ElementTheme Theme
     {
         get;
     }
-
-    Task InitializeAsync();
 
     Task SetThemeAsync(ElementTheme theme);
 

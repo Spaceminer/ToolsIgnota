@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
 using ToolsIgnota.Activation;
+using ToolsIgnota.Contracts;
 using ToolsIgnota.Contracts.Services;
 using ToolsIgnota.Core.Contracts.Services;
 using ToolsIgnota.Core.Services;
@@ -63,8 +64,18 @@ public partial class App : Application
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
 
+            services.AddSingleton<ICombatManagerService, CombatManagerService>();
+
             // Core Services
             services.AddSingleton<IFileService, FileService>();
+
+            // OnInitialize
+            services.AddSingleton<IOnInitialize>(x => x.GetRequiredService<IThemeSelectorService>());
+            services.AddSingleton<IOnInitialize>(x => x.GetRequiredService<ICombatManagerService>());
+
+            // OnStartup
+            services.AddSingleton<IOnStartup>(x => x.GetRequiredService<IThemeSelectorService>());
+            services.AddSingleton<IOnStartup>(x => x.GetRequiredService<ICombatManagerService>());
 
             // Views and ViewModels
             services.AddTransient<SettingsViewModel>();

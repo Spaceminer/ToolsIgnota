@@ -13,6 +13,29 @@
     <Grid>
         <StackPanel
             x:Name="ContentArea">
+            <TextBlock x:Uid="Settings_CombatManager" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
+                <TextBlock x:Uid="Settings_CombatManager_Connection" />
+                <StackPanel Margin="{StaticResource XSmallTopMargin}" Orientation="Horizontal" Spacing="{StaticResource TextBoxRowSpacing}">
+                    <TextBox 
+                        x:Uid="Settings_CombatManager_IpAddress" 
+                        Text="{x:Bind ViewModel.CombatManagerIp, Mode=TwoWay}" 
+                        Width="150" />
+                    <TextBlock Text=":" Margin="{StaticResource AlignWithTextBoxTopMargin}" />
+                    <TextBox 
+                        x:Uid="Settings_CombatManager_Port" 
+                        Text="{x:Bind ViewModel.CombatManagerPort, Mode=TwoWay}" 
+                        Width="90" />
+                    <Button 
+                        x:Uid="Settings_CombatManager_Refresh"
+                        Command="{x:Bind ViewModel.ConnectCombatManagerCommand}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.CombatManagerConnectTooltip, Mode=OneWay}">
+                        <SymbolIcon 
+                            x:Uid="Settings_CombatManager_ConnectionStatus" 
+                            Symbol="{x:Bind ViewModel.CombatManagerConnectSymbol, Mode=OneWay}"/>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
             <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
             <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
                 <TextBlock x:Uid="Settings_Theme" />

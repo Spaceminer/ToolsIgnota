@@ -24,6 +24,11 @@ public class ThemeSelectorService : IThemeSelectorService
         await Task.CompletedTask;
     }
 
+    public async Task StartupAsync()
+    {
+        await SetRequestedThemeAsync();
+    }
+
     public async Task SetThemeAsync(ElementTheme theme)
     {
         Theme = theme;
