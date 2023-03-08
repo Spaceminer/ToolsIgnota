@@ -1,0 +1,60 @@
+﻿<UserControl
+    x:Class="ToolsIgnota.Views.CreatureImageSettingsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="using:ToolsIgnota.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <StandardUICommand
+            x:Name="DeleteCreatureImageCommand"
+            Kind="Delete"
+            Command="{x:Bind ViewModel.DeleteCreatureImageCommand}"
+            Description="Remove this image"/>
+        <XamlUICommand
+            x:Name="PickImageForCreatureImageCommand"
+            Command="{x:Bind ViewModel.PickImageForCreatureImageCommand}"
+            Description="Pick an image for this creature"/>
+        <DataTemplate 
+            x:Key="CreatureImageListTemplate"
+            x:DataType="models:CreatureImageModel">
+            <StackPanel Orientation="Horizontal" Height="35" Spacing="5">
+                <TextBox 
+                    x:Name="CreatureNameInput"
+                    Width="256"
+                    Text="{x:Bind Name, Mode=TwoWay}"
+                    TextChanged="TextBox_TextChanged"
+                    KeyDown="TextBox_KeyDown"/>
+                <Button
+                    Height="35"
+                    MinWidth="35"
+                    Padding="2"
+                    Command="{StaticResource PickImageForCreatureImageCommand}"
+                    CommandParameter="{x:Bind Id}">
+                    <Image Source="{x:Bind Image, Mode=OneWay}" Stretch="Uniform"/>
+                </Button>
+                <Button
+                    Height="35"
+                    Command="{StaticResource DeleteCreatureImageCommand}"
+                    CommandParameter="{x:Bind Id}">
+                    <SymbolIcon Symbol="Delete"/>
+                </Button>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <ListView
+            SelectionMode="None"
+            x:Name="CreatureImageList"
+            ItemTemplate="{StaticResource CreatureImageListTemplate}"
+            ItemsSource="{x:Bind Path=ViewModel.CreatureImageList, Mode=OneWay}"/>
+        <!--<Button 
+            Grid.Row="3"
+            Command="{x:Bind VM.AddCreatureImageCommand}">
+            Add Creature
+        </Button>-->
+    </Grid>
+</UserControl>

@@ -123,8 +123,8 @@
   <data name="AppDescription" xml:space="preserve">
     <value>Tools Ignota</value>
   </data>
-  <data name="Shell_InitiativeControl.Content" xml:space="preserve">
-    <value>Initiative Control</value>
+  <data name="Shell_DisplayControl.Content" xml:space="preserve">
+    <value>Display Control</value>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>Personalization</value>
@@ -167,5 +167,26 @@
   </data>
   <data name="Settings_CombatManager_Connection_Tooltip_Error" xml:space="preserve">
     <value>Failed to connect</value>
+  </data>
+  <data name="Shell_ControlImages.Content" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="Shell_ControlInitiative.Content" xml:space="preserve">
+    <value>Initiative</value>
+  </data>
+  <data name="ControlInitiative_CreatureImages.Text" xml:space="preserve">
+    <value>Creature Images</value>
+  </data>
+  <data name="ControlInitiative_DisplayOptions.Text" xml:space="preserve">
+    <value>Display Options</value>
+  </data>
+  <data name="ControlInitiative_DisplayOptions_Visible.Header" xml:space="preserve">
+    <value>Show Initiative Display</value>
+  </data>
+  <data name="ControlInitiative_DisplayOptions_Visible.OffContent" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="ControlInitiative_DisplayOptions_Visible.OnContent" xml:space="preserve">
+    <value>On</value>
   </data>
 </root>

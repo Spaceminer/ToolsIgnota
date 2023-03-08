@@ -14,7 +14,8 @@ public class PageService : IPageService
 
     public PageService()
     {
-        Configure<InitiativeControlViewModel, InitiativeControlPage>();
+        Configure<ControlImagesViewModel, ControlImagesPage>();
+        Configure<ControlInitiativeViewModel, ControlInitiativePage>();
         Configure<SettingsViewModel, SettingsPage>();
     }
 

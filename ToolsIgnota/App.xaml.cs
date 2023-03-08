@@ -65,6 +65,7 @@ public partial class App : Application
             services.AddSingleton<INavigationService, NavigationService>();
 
             services.AddSingleton<ICombatManagerService, CombatManagerService>();
+            services.AddSingleton<ICreatureImageService, CreatureImageService>();
 
             // Core Services
             services.AddSingleton<IFileService, FileService>();
@@ -72,18 +73,23 @@ public partial class App : Application
             // OnInitialize
             services.AddSingleton<IOnInitialize>(x => x.GetRequiredService<IThemeSelectorService>());
             services.AddSingleton<IOnInitialize>(x => x.GetRequiredService<ICombatManagerService>());
+            services.AddSingleton<IOnInitialize>(x => x.GetRequiredService<ICreatureImageService>());
 
             // OnStartup
             services.AddSingleton<IOnStartup>(x => x.GetRequiredService<IThemeSelectorService>());
             services.AddSingleton<IOnStartup>(x => x.GetRequiredService<ICombatManagerService>());
 
             // Views and ViewModels
+            services.AddTransient<CreatureImageSettingsViewModel>();
+
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
-            services.AddTransient<InitiativeControlViewModel>();
-            services.AddTransient<InitiativeControlPage>();
-            services.AddTransient<ShellPage>();
+            services.AddTransient<ControlImagesViewModel>();
+            services.AddTransient<ControlImagesPage>();
+            services.AddTransient<ControlInitiativeViewModel>();
+            services.AddTransient<ControlInitiativePage>();
             services.AddTransient<ShellViewModel>();
+            services.AddTransient<ShellPage>();
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));

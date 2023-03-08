@@ -23,7 +23,7 @@ public record CMCreature(
     bool IsMonster,
     bool IsActive,
     bool IsHidden,
-    IEnumerable<CMCondition> activeConditions);
+    IEnumerable<CMCondition> ActiveConditions);
 
 public record CMInitiativeCount(
     int Base,
