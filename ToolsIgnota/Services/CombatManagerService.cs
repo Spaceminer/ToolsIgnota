@@ -1,7 +1,6 @@
 ﻿using System.Net.WebSockets;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using ToolsIgnota.Contracts;
 using ToolsIgnota.Contracts.Services;
 using ToolsIgnota.Data;
 using ToolsIgnota.Data.Models;
@@ -62,21 +61,15 @@ public class CombatManagerService : ICombatManagerService, IDisposable, IAsyncDi
         try
         {
             var observable = await _connection.Connect();
-            _combatManagerSubscription = (await _connection.Connect()).Subscribe(
-                x =>
+            _combatManagerSubscription = observable.Subscribe(
+                newState =>
                 {
-                    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        _creaturesSubject.OnNext(x.Data.CombatList);
-                        _roundSubject.OnNext(x.Data.Round);
-                    });
+                    _creaturesSubject.OnNext(newState.Data.CombatList);
+                    _roundSubject.OnNext(newState.Data.Round);
                 }, 
-                ex =>
+                connectionError =>
                 {
-                    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        _connectionSubject.OnNext(false);
-                    });
+                    _connectionSubject.OnNext(false);
                 }
             );
             _connectionSubject.OnNext(true);

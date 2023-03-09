@@ -1,0 +1,40 @@
+﻿<UserControl
+    x:Class="ToolsIgnota.Views.InitiativeDisplayControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="using:ToolsIgnota.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <DataTemplate 
+            x:Key="InitiativeCreatureTemplate"
+            x:DataType="models:InitiativeCreatureModel">
+            <PersonPicture
+                ProfilePicture="{x:Bind CreatureImage, Mode=OneWay}"
+                DisplayName="{x:Bind CreatureName, Mode=OneWay}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <controls:Carousel 
+            x:Name="CarouselControl"
+            ItemTemplate="{StaticResource InitiativeCreatureTemplate}"
+            ItemsSource="{x:Bind ViewModel.CreatureList, Mode=OneWay}"
+            SelectedIndex="{x:Bind ViewModel.ActiveCreatureIndex, Mode=OneWay}"
+            InvertPositive="True"
+            ItemDepth="300"
+            ItemMargin="0"
+            ItemRotationX="0"
+            ItemRotationY="0"
+            ItemRotationZ ="0"
+            Orientation="Horizontal"
+            TransitionDuration="500">
+            <controls:Carousel.EasingFunction>
+                <CubicEase EasingMode="EaseOut" />
+            </controls:Carousel.EasingFunction>
+        </controls:Carousel>
+    </Grid>
+</UserControl>

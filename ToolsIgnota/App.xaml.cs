@@ -40,6 +40,7 @@ public partial class App : Application
     }
 
     public static WindowEx MainWindow { get; } = new MainWindow();
+    public static WindowEx DisplayWindow { get; } = new DisplayWindow();
 
     public App()
     {
@@ -81,6 +82,7 @@ public partial class App : Application
 
             // Views and ViewModels
             services.AddTransient<CreatureImageSettingsViewModel>();
+            services.AddTransient<InitiativeDisplayViewModel>();
 
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
@@ -88,8 +90,11 @@ public partial class App : Application
             services.AddTransient<ControlImagesPage>();
             services.AddTransient<ControlInitiativeViewModel>();
             services.AddTransient<ControlInitiativePage>();
+
             services.AddTransient<ShellViewModel>();
             services.AddTransient<ShellPage>();
+            services.AddTransient<DisplayViewModel>();
+            services.AddTransient<DisplayPage>();
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));

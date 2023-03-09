@@ -44,6 +44,11 @@ public class ThemeSelectorService : IThemeSelectorService
             rootElement.RequestedTheme = Theme;
         }
 
+        if (App.DisplayWindow.Content is FrameworkElement displayElement)
+        {
+            displayElement.RequestedTheme = Theme;
+        }
+
         await Task.CompletedTask;
     }
 

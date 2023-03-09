@@ -15,6 +15,7 @@ public class ActivationService : IActivationService
     private readonly IEnumerable<IOnInitialize> _initializeHooks;
     private readonly IEnumerable<IOnStartup> _startupHooks;
     private UIElement? _shell = null;
+    private UIElement? _display = null;
 
     public ActivationService(
         ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
@@ -40,11 +41,19 @@ public class ActivationService : IActivationService
             App.MainWindow.Content = _shell ?? new Frame();
         }
 
+        // Set the DisplayWindow Content.
+        if (App.DisplayWindow.Content == null)
+        {
+            _display = App.GetService<DisplayPage>();
+            App.DisplayWindow.Content = _display ?? new Frame();
+        }
+
         // Handle activation via ActivationHandlers.
         await HandleActivationAsync(activationArgs);
 
-        // Activate the MainWindow.
+        // Activate the Windows.
         App.MainWindow.Activate();
+        App.DisplayWindow.Activate();
 
         // Execute tasks after activation.
         await StartupAsync();

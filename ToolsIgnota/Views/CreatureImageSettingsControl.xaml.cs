@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.WinUI.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using ToolsIgnota.ViewModels;
-using WinRT;
 
 namespace ToolsIgnota.Views;
 public sealed partial class CreatureImageSettingsControl : UserControl
