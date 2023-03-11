@@ -18,7 +18,11 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid
+        RowDefinitions="Auto"
+        Padding="{StaticResource SmallTopBottomPadding}"
+        IsHitTestVisible="False"
+        Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
         <controls:Carousel 
             x:Name="CarouselControl"
             ItemTemplate="{StaticResource InitiativeCreatureTemplate}"

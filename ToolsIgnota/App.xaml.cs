@@ -7,7 +7,6 @@ using ToolsIgnota.Contracts;
 using ToolsIgnota.Contracts.Services;
 using ToolsIgnota.Core.Contracts.Services;
 using ToolsIgnota.Core.Services;
-using ToolsIgnota.Helpers;
 using ToolsIgnota.Models;
 using ToolsIgnota.Services;
 using ToolsIgnota.ViewModels;
@@ -60,6 +59,7 @@ public partial class App : Application
             services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
             services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
             services.AddTransient<INavigationViewService, NavigationViewService>();
+            services.AddTransient<IFilePickerService, FilePickerService>();
 
             services.AddSingleton<IActivationService, ActivationService>();
             services.AddSingleton<IPageService, PageService>();

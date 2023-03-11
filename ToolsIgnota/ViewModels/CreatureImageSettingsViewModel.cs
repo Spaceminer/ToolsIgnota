@@ -12,12 +12,16 @@ namespace ToolsIgnota.ViewModels;
 public partial class CreatureImageSettingsViewModel : ObservableRecipient
 {
     private readonly ICreatureImageService _creatureImageService;
+    private readonly IFilePickerService _filePickerService;
 
     public ObservableCollection<CreatureImageModel> CreatureImageList { get; set; } = new();
 
-    public CreatureImageSettingsViewModel(ICreatureImageService creatureImageService)
+    public CreatureImageSettingsViewModel(
+        ICreatureImageService creatureImageService,
+        IFilePickerService filePickerService)
     {
         _creatureImageService = creatureImageService ?? throw new ArgumentNullException(nameof(creatureImageService));
+        _filePickerService = filePickerService ?? throw new ArgumentNullException(nameof(filePickerService));
 
         _creatureImageService.CreatureImages.FirstAsync().Subscribe(images =>
         {
@@ -44,14 +48,13 @@ public partial class CreatureImageSettingsViewModel : ObservableRecipient
     [RelayCommand]
     public async Task PickImageForCreatureImage(Guid id)
     {
-        //var image = await _filePickerService.GetImage();
-        //var entry = CreatureImageList.Where(x => x.Id == id).FirstOrDefault();
-        //if (image != null)
-        //{
-        //    entry.Image = image.Path;
-        //    SanitizeCreatureImages();
-        //    await SaveCreatureImages();
-        //}
+        var image = await _filePickerService.GetImage();
+        var entry = CreatureImageList.Where(x => x.Id == id).FirstOrDefault();
+        if (image != null && entry != null)
+        {
+            entry.Image = image.Path;
+            await SaveCreatureImages();
+        }
     }
 
     public void AddNewFinalCreatureImage()
