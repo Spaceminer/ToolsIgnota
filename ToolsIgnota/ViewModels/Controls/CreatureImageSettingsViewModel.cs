@@ -48,7 +48,7 @@ public partial class CreatureImageSettingsViewModel : ObservableRecipient
     [RelayCommand]
     public async Task PickImageForCreatureImage(Guid id)
     {
-        var image = await _filePickerService.GetImage();
+        var image = await _filePickerService.PickImage();
         var entry = CreatureImageList.Where(x => x.Id == id).FirstOrDefault();
         if (image != null && entry != null)
         {

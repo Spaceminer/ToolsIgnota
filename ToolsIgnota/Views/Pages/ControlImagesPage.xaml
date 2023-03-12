@@ -13,7 +13,12 @@
     4. Display Effects
     5. Image Zoom?
     -->
-    <Grid x:Name="ContentArea">
-        
+    <Grid>
+        <StackPanel x:Name="ContentArea">
+            <TextBlock x:Uid="ControlImages_Background" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
+                <Button x:Uid="ControlImages_Background_SetButton" Command="{x:Bind ViewModel.PickBackgroundImageCommand}"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

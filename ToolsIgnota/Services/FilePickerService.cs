@@ -6,7 +6,7 @@ namespace ToolsIgnota.Services;
 
 public class FilePickerService : IFilePickerService
 {
-    public async Task<StorageFile> GetImage()
+    public async Task<StorageFile> PickImage()
     {
         var picker = new Windows.Storage.Pickers.FileOpenPicker();
         var windowHandle = App.MainWindow.GetWindowHandle();

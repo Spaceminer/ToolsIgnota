@@ -67,6 +67,7 @@ public partial class App : Application
 
             services.AddSingleton<ICombatManagerService, CombatManagerService>();
             services.AddSingleton<ICreatureImageService, CreatureImageService>();
+            services.AddSingleton<IImageDisplayService, ImageDisplayService>();
 
             // Core Services
             services.AddSingleton<IFileService, FileService>();
@@ -83,6 +84,7 @@ public partial class App : Application
             // Views and ViewModels
             services.AddTransient<CreatureImageSettingsViewModel>();
             services.AddTransient<InitiativeDisplayViewModel>();
+            services.AddTransient<BackgroundImageViewModel>();
 
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();

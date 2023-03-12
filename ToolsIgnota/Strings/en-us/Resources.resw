@@ -189,4 +189,10 @@
   <data name="ControlInitiative_DisplayOptions_Visible.OnContent" xml:space="preserve">
     <value>On</value>
   </data>
+  <data name="ControlImages_Background.Text" xml:space="preserve">
+    <value>Background</value>
+  </data>
+  <data name="ControlImages_Background_SetButton.Content" xml:space="preserve">
+    <value>Set Background</value>
+  </data>
 </root>

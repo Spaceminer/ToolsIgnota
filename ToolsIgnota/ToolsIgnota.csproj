@@ -18,6 +18,7 @@
     <None Remove="Assets\WindowIcon.ico" />
     <None Remove="Styles\Spacings.xaml" />
     <None Remove="Views\ControlInitiativePage.xaml" />
+    <None Remove="Views\Controls\BackgroundImageControl.xaml" />
     <None Remove="Views\CreatureImageSettingsControl.xaml" />
     <None Remove="Views\DisplayPage.xaml" />
     <None Remove="Views\InitiativeCreatureControl.xaml" />
@@ -47,6 +48,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\Controls\BackgroundImageControl.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Views\InitiativeCreatureControl.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
@@ -77,6 +81,10 @@
     <Page Update="Windows\DisplayWindow.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Pages\" />
   </ItemGroup>
   
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">

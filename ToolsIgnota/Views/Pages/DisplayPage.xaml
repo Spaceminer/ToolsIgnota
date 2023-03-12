@@ -22,12 +22,7 @@
                    Width="16"
                    Height="16" />
         </Grid>
-        <Image x:Name="BackgroundImage" 
-               Canvas.ZIndex="-1"
-               HorizontalAlignment="Center" 
-               VerticalAlignment="Center"
-               Stretch="Uniform" 
-               Source="C:\Users\rjshe\source\repos\ToolsIngota-Migration\ToolsIgnota\ToolsIgnota\Assets\Backgrounds\Tavern.jpg"/>
+        <views:BackgroundImageControl Canvas.ZIndex="-1"/>
         <views:InitiativeDisplayControl VerticalAlignment="Top"/>
     </Grid>
 </Page>

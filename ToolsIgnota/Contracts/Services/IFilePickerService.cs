@@ -4,5 +4,5 @@ namespace ToolsIgnota.Contracts.Services;
 
 public interface IFilePickerService
 {
-    Task<StorageFile> GetImage();
+    Task<StorageFile> PickImage();
 }
