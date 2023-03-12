@@ -18,6 +18,7 @@ public class CombatManagerService : ICombatManagerService, IDisposable, IAsyncDi
     private CombatManagerConnection? _connection;
     private IDisposable? _combatManagerSubscription;
     private bool _disposed;
+    private int? _previousRoundNumber = null;
 
     public string IpAddress { get; set; } = "localhost:12457";
 
@@ -65,7 +66,8 @@ public class CombatManagerService : ICombatManagerService, IDisposable, IAsyncDi
                 newState =>
                 {
                     _creaturesSubject.OnNext(newState.Data.CombatList);
-                    _roundSubject.OnNext(newState.Data.Round);
+                    if(newState.Data.Round != _previousRoundNumber)
+                        _roundSubject.OnNext(newState.Data.Round);
                 }, 
                 connectionError =>
                 {
