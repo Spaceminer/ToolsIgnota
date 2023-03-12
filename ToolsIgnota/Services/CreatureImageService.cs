@@ -29,5 +29,6 @@ public class CreatureImageService : ICreatureImageService
     public async Task SaveCreatureImages(IEnumerable<CreatureImage> imageNamePairs)
     {
         await _localSettingsService.SaveSettingAsync(SettingsKey, imageNamePairs);
+        _creatureImagesSubject.OnNext(imageNamePairs);
     }
 }
