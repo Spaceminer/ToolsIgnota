@@ -20,7 +20,7 @@ public partial class InitiativeDisplayViewModel : ObservableRecipient, IDisposab
     [ObservableProperty] private int _activeCreatureIndex = 0;
     [ObservableProperty] private string _roundNumber = "Combat Begins...";
 
-    private IEnumerable<CreatureImage> _creatureImages;
+    private IEnumerable<CreatureImage> _creatureImages = Enumerable.Empty<CreatureImage>();
     private Dictionary<Guid, CMCreature> _creatureLookup = new();
     private bool _disposed;
     private int _indexHold = 0;
@@ -67,10 +67,11 @@ public partial class InitiativeDisplayViewModel : ObservableRecipient, IDisposab
 
     private void UpdateCreatureList(IEnumerable<CMCreature> creatures)
     {
+        var visibleCreatures = creatures.Where(x => !x.IsHidden);
         lock (displayLock)
         {
             // 1. Remove deleted creatures
-            var newCreaturesById = creatures.ToImmutableDictionary(x => x.ID);
+            var newCreaturesById = visibleCreatures.ToImmutableDictionary(x => x.ID);
             var creaturesToRemove = CreatureList.Where(x => !newCreaturesById.ContainsKey(x.Id)).ToList();
             foreach (var c in creaturesToRemove)
             {
@@ -79,15 +80,15 @@ public partial class InitiativeDisplayViewModel : ObservableRecipient, IDisposab
 
             // 2. Add new creatures
             var existingCreaturesById = CreatureList.ToImmutableDictionary(x => x.Id);
-            var creaturesToAdd = creatures.Where(x => !existingCreaturesById.ContainsKey(x.ID)).ToList();
+            var creaturesToAdd = visibleCreatures.Where(x => !existingCreaturesById.ContainsKey(x.ID)).ToList();
             foreach (var c in creaturesToAdd)
             {
                 CreatureList.Add(new InitiativeCreatureModel(c));
             }
 
             // 3. Sort by initative
-            var sortedCreatures = creatures.OrderByDescending(x => x.InitiativeCount);
-            if (creatures.Any(x => _creatureLookup.GetValueOrDefault(x.ID)?.InitiativeCount.CompareTo(x.InitiativeCount) != 0))
+            var sortedCreatures = visibleCreatures.OrderByDescending(x => x.InitiativeCount);
+            if (visibleCreatures.Any(x => _creatureLookup.GetValueOrDefault(x.ID)?.InitiativeCount.CompareTo(x.InitiativeCount) != 0))
             {
                 var initiativeCreaturesById = CreatureList.ToImmutableDictionary(x => x.Id);
                 for (var i = 0; i < sortedCreatures.Count(); i++)
@@ -98,7 +99,8 @@ public partial class InitiativeDisplayViewModel : ObservableRecipient, IDisposab
 
             // 4. Scroll to active
             var activeIndex = sortedCreatures.TakeWhile(x => !x.IsActive).Count();
-            _indexHold = activeIndex;
+            if(activeIndex < sortedCreatures.Count())
+                _indexHold = activeIndex;
             App.DisplayWindow.DispatcherQueue.TryEnqueue(async () =>
             {
                 // This is here because the carousel has to recieve the new list
@@ -113,7 +115,7 @@ public partial class InitiativeDisplayViewModel : ObservableRecipient, IDisposab
             if (!CreatureList.Any())
                 CreatureList.Add(new InitiativeCreatureModel());
 
-            _creatureLookup = creatures.ToDictionary(x => x.ID);
+            _creatureLookup = visibleCreatures.ToDictionary(x => x.ID);
         }
     }
 
