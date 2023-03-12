@@ -7,7 +7,7 @@ namespace ToolsIgnota.Models;
 public partial class InitiativeCreatureModel : ObservableObject
 {
     [ObservableProperty] private string _creatureImage = "..";
-    [ObservableProperty] private string _creatureName = "??";
+    [ObservableProperty] private string _creatureName = "?";
     [ObservableProperty] private bool _isActive = false;
 
     public Guid Id { get; set; } = Guid.NewGuid();

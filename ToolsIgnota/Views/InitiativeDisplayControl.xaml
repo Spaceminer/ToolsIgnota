@@ -20,12 +20,19 @@
     </UserControl.Resources>
 
     <Grid
-        RowDefinitions="Auto"
+        RowDefinitions="Auto, Auto"
         Padding="{StaticResource SmallTopBottomPadding}"
         IsHitTestVisible="False"
         Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
+        <TextBlock
+            TextAlignment="Center"
+            x:Name="RoundLabel"
+            Grid.Row="0"
+            FontSize="50"
+            Text="{x:Bind ViewModel.RoundNumber, Mode=OneWay}"/>
         <controls:Carousel 
-            x:Name="CarouselControl"
+            x:Name="InitiativeCarousel"
+            Grid.Row="1"
             ItemTemplate="{StaticResource InitiativeCreatureTemplate}"
             ItemsSource="{x:Bind ViewModel.CreatureList, Mode=OneWay}"
             SelectedIndex="{x:Bind ViewModel.ActiveCreatureIndex, Mode=OneWay}"
