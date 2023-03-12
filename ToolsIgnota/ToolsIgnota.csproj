@@ -20,6 +20,7 @@
     <None Remove="Views\ControlInitiativePage.xaml" />
     <None Remove="Views\CreatureImageSettingsControl.xaml" />
     <None Remove="Views\DisplayPage.xaml" />
+    <None Remove="Views\InitiativeCreatureControl.xaml" />
     <None Remove="Views\InitiativeDisplayControl.xaml" />
     <None Remove="Windows\DisplayWindow.xaml" />
   </ItemGroup>
@@ -46,6 +47,10 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\InitiativeCreatureControl.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\InitiativeDisplayControl.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

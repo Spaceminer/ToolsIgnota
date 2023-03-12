@@ -5,16 +5,17 @@
     xmlns:models="using:ToolsIgnota.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls" 
+    xmlns:views="using:ToolsIgnota.Views"
     mc:Ignorable="d">
 
     <UserControl.Resources>
         <DataTemplate 
             x:Key="InitiativeCreatureTemplate"
             x:DataType="models:InitiativeCreatureModel">
-            <PersonPicture
-                ProfilePicture="{x:Bind CreatureImage, Mode=OneWay}"
-                DisplayName="{x:Bind CreatureName, Mode=OneWay}"/>
+            <views:InitiativeCreatureControl
+                CreatureName="{x:Bind CreatureName, Mode=OneWay}"
+                CreatureImage="{x:Bind CreatureImage, Mode=OneWay}"/>
         </DataTemplate>
     </UserControl.Resources>
 
