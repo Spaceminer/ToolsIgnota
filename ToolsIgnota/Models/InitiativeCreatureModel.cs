@@ -8,7 +8,6 @@ public partial class InitiativeCreatureModel : ObservableObject
 {
     [ObservableProperty] private string _creatureImage = "..";
     [ObservableProperty] private string _creatureName = "?";
-    [ObservableProperty] private bool _isActive = false;
 
     public Guid Id { get; set; } = Guid.NewGuid();
 
@@ -18,6 +17,5 @@ public partial class InitiativeCreatureModel : ObservableObject
     {
         Id = creature.ID;
         _creatureName = creature.Name;
-        _isActive = creature.IsActive;
     }
 }

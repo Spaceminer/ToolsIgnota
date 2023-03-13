@@ -70,8 +70,14 @@ public partial class InitiativeDisplayViewModel : ObservableRecipient, IDisposab
         var visibleCreatures = creatures.Where(x => !x.IsHidden);
         lock (displayLock)
         {
-            // 1. Remove deleted creatures
+            // 0. Update existing creatures
             var newCreaturesById = visibleCreatures.ToImmutableDictionary(x => x.ID);
+            foreach (var c in CreatureList)
+            {
+                c.CreatureName = newCreaturesById.GetValueOrDefault(c.Id)?.Name ?? "?";
+            }
+
+            // 1. Remove deleted creatures
             var creaturesToRemove = CreatureList.Where(x => !newCreaturesById.ContainsKey(x.Id)).ToList();
             foreach (var c in creaturesToRemove)
             {

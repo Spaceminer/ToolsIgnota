@@ -10,7 +10,7 @@
 
     <Grid>
         <Border
-            BorderBrush="Goldenrod"
+            BorderBrush="{x:Bind BorderColor, Mode=OneWay}"
             BorderThickness="5"
             CornerRadius="10000"
             Height="200"
