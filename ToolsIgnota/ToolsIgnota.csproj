@@ -16,6 +16,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\WindowIcon.ico" />
+    <None Remove="Styles\InitiativeDisplay.xaml" />
     <None Remove="Styles\Spacings.xaml" />
     <None Remove="Views\ControlInitiativePage.xaml" />
     <None Remove="Views\Controls\BackgroundImageControl.xaml" />
@@ -33,6 +34,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
     <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230118.102" />
@@ -48,6 +50,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Styles\InitiativeDisplay.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Views\Controls\BackgroundImageControl.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>

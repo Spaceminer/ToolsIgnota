@@ -8,7 +8,8 @@
     xmlns:behaviors="using:ToolsIgnota.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ui="using:CommunityToolkit.WinUI.UI" 
-    xmlns:views="using:ToolsIgnota.Views">
+    xmlns:views="using:ToolsIgnota.Views"
+    xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations">
 
     <Grid>
         <Grid x:Name="AppTitleBar"
@@ -23,6 +24,18 @@
                    Height="16" />
         </Grid>
         <views:BackgroundImageControl Canvas.ZIndex="-1"/>
-        <views:InitiativeDisplayControl VerticalAlignment="Top"/>
+        <views:InitiativeDisplayControl 
+            VerticalAlignment="Top" 
+            Visibility="{x:Bind ViewModel.ShowInitiative, Mode=OneWay}">
+            <animations:Implicit.ShowAnimations>
+                <animations:TranslationAnimation Duration="0:0:1" From="0, -300, 0" To="0"/>
+                <animations:OpacityAnimation Duration="0:0:1" From="0" To="1.0"/>
+            </animations:Implicit.ShowAnimations>
+
+            <animations:Implicit.HideAnimations>
+                <animations:OpacityAnimation Duration="0:0:1" To="0.0"/>
+                <animations:TranslationAnimation Duration="0:0:1" To="0, -300, 0"/>
+            </animations:Implicit.HideAnimations>
+        </views:InitiativeDisplayControl>
     </Grid>
 </Page>

@@ -14,7 +14,12 @@
         <StackPanel x:Name="ContentArea">
             <TextBlock x:Uid="ControlInitiative_DisplayOptions" Style="{ThemeResource SubtitleTextBlockStyle}" />
             <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
-                <ToggleSwitch x:Uid="ControlInitiative_DisplayOptions_Visible" Margin="{StaticResource XSmallTopMargin}"></ToggleSwitch>
+                <ToggleSwitch 
+                    x:Uid="ControlInitiative_DisplayOptions_Visible" 
+                    x:Name="InitiativeVisibleSwitch"
+                    Margin="{StaticResource XSmallTopMargin}"
+                    IsOn="{x:Bind ViewModel.InitiativeVisible, Mode=OneTime}"
+                    Toggled="InitiativeVisibleSwitch_Toggled" />
             </StackPanel>
             <TextBlock x:Uid="ControlInitiative_CreatureImages" Style="{ThemeResource SubtitleTextBlockStyle}" />
             <StackPanel Margin="{StaticResource SmallTopBottomMargin}">

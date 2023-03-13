@@ -12,7 +12,7 @@ namespace ToolsIgnota.ViewModels;
 
 public partial class InitiativeDisplayViewModel : ObservableRecipient, IDisposable
 {
-    private readonly ICreatureImageService _creatureImageService;
+    private readonly IInitiativeDisplayService _creatureImageService;
     private readonly ICombatManagerService _combatManagerService;
     private readonly List<IDisposable> _subscriptions = new();
     private readonly object displayLock = new object();
@@ -28,7 +28,7 @@ public partial class InitiativeDisplayViewModel : ObservableRecipient, IDisposab
     public ObservableCollection<InitiativeCreatureModel> CreatureList { get; set; } = new();
 
     public InitiativeDisplayViewModel(
-        ICreatureImageService creatureImageService,
+        IInitiativeDisplayService creatureImageService,
         ICombatManagerService combatManagerService)
     {
         _creatureImageService = creatureImageService ?? throw new ArgumentNullException(nameof(creatureImageService));

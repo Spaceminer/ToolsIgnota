@@ -23,7 +23,7 @@
         RowDefinitions="Auto, Auto"
         Padding="{StaticResource SmallTopBottomPadding}"
         IsHitTestVisible="False"
-        Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
+        Background="{ThemeResource InitiativeDisplayAcrylicBrush}">
         <TextBlock
             TextAlignment="Center"
             x:Name="RoundLabel"

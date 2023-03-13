@@ -66,7 +66,7 @@ public partial class App : Application
             services.AddSingleton<INavigationService, NavigationService>();
 
             services.AddSingleton<ICombatManagerService, CombatManagerService>();
-            services.AddSingleton<ICreatureImageService, CreatureImageService>();
+            services.AddSingleton<IInitiativeDisplayService, InitiativeDisplayService>();
             services.AddSingleton<IImageDisplayService, ImageDisplayService>();
 
             // Core Services
@@ -75,7 +75,7 @@ public partial class App : Application
             // OnInitialize
             services.AddSingleton<IOnInitialize>(x => x.GetRequiredService<IThemeSelectorService>());
             services.AddSingleton<IOnInitialize>(x => x.GetRequiredService<ICombatManagerService>());
-            services.AddSingleton<IOnInitialize>(x => x.GetRequiredService<ICreatureImageService>());
+            services.AddSingleton<IOnInitialize>(x => x.GetRequiredService<IInitiativeDisplayService>());
 
             // OnStartup
             services.AddSingleton<IOnStartup>(x => x.GetRequiredService<IThemeSelectorService>());

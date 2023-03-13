@@ -11,13 +11,13 @@ namespace ToolsIgnota.ViewModels;
 
 public partial class CreatureImageSettingsViewModel : ObservableRecipient
 {
-    private readonly ICreatureImageService _creatureImageService;
+    private readonly IInitiativeDisplayService _creatureImageService;
     private readonly IFilePickerService _filePickerService;
 
     public ObservableCollection<CreatureImageModel> CreatureImageList { get; set; } = new();
 
     public CreatureImageSettingsViewModel(
-        ICreatureImageService creatureImageService,
+        IInitiativeDisplayService creatureImageService,
         IFilePickerService filePickerService)
     {
         _creatureImageService = creatureImageService ?? throw new ArgumentNullException(nameof(creatureImageService));
