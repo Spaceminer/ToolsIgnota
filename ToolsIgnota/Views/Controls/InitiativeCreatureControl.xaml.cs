@@ -25,6 +25,7 @@ public sealed partial class InitiativeCreatureControl : UserControl
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ImageVisibility))]
+    [NotifyPropertyChangedFor(nameof(InitialsVisibility))]
     private string _creatureImage = "..";
 
     [ObservableProperty]
@@ -40,15 +41,21 @@ public sealed partial class InitiativeCreatureControl : UserControl
         get
         {
             var name = CreatureName.ToLower();
-            if (name.Contains("red"))
-                return new SolidColorBrush(Colors.Red);
             if (name.Contains("blue"))
-                return new SolidColorBrush(Colors.Blue);
+                return new SolidColorBrush(Colors.DarkBlue);
             if (name.Contains("green"))
-                return new SolidColorBrush(Colors.Green);
+                return new SolidColorBrush(Colors.DarkGreen);
             if (name.Contains("yellow"))
                 return new SolidColorBrush(Colors.Yellow);
-            return new SolidColorBrush(Colors.Goldenrod);
+            if (name.Contains("red"))
+                return new SolidColorBrush(Colors.DarkRed);
+            if (name.Contains("pink"))
+                return new SolidColorBrush(Colors.DeepPink);
+            if (name.Contains("orange"))
+                return new SolidColorBrush(Colors.DarkOrange);
+            if (name.Contains("purple"))
+                return new SolidColorBrush(Colors.Purple);
+            return new SolidColorBrush(Colors.DarkGoldenrod);
         }
     }
 
