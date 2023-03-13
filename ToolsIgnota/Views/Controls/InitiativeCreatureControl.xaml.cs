@@ -3,9 +3,7 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
-using System.Text.RegularExpressions;
 using ToolsIgnota.Core.Helpers;
-using Windows.UI;
 
 namespace ToolsIgnota.Views;
 
